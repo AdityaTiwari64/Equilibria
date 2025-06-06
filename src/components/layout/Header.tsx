@@ -30,10 +30,13 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
           
-          <div className="flex items-center gap-2">
+          <button 
+            onClick={toggleSidebar}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-600 text-white font-bold">E</div>
             <h1 className="text-xl font-semibold tracking-tight">Equilibria</h1>
-          </div>
+          </button>
         </div>
 
         <div className="hidden md:flex items-center px-3 py-1.5 gap-2 bg-surface-100 dark:bg-surface-700 rounded-lg w-72 lg:w-96">

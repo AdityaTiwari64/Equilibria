@@ -105,6 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                   <motion.span
                     animate={{ opacity: isOpen ? 1 : 0 }}
                     transition={{ duration: 0.2 }}
+                    className="whitespace-nowrap"
                   >
                     {item.label}
                   </motion.span>
@@ -125,7 +126,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
           {isOpen && (
             <motion.div 
               className="mt-6"
-              animate={{ opacity: isOpen ? 1 : 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
               <h3 className="px-3 text-xs font-medium text-surface-500 uppercase tracking-wider">
@@ -136,19 +139,34 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                   <div className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xs font-bold mr-3">
                     P
                   </div>
-                  <span>Personal</span>
+                  <motion.span
+                    animate={{ opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Personal
+                  </motion.span>
                 </Link>
                 <Link to="/category/work" className="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-surface-600 hover:text-surface-900 hover:bg-surface-100 dark:text-surface-400 dark:hover:text-surface-100 dark:hover:bg-surface-700/50">
                   <div className="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xs font-bold mr-3">
                     W
                   </div>
-                  <span>Work</span>
+                  <motion.span
+                    animate={{ opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Work
+                  </motion.span>
                 </Link>
                 <Link to="/category/goals" className="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-surface-600 hover:text-surface-900 hover:bg-surface-100 dark:text-surface-400 dark:hover:text-surface-100 dark:hover:bg-surface-700/50">
                   <div className="w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center text-xs font-bold mr-3">
                     G
                   </div>
-                  <span>Goals</span>
+                  <motion.span
+                    animate={{ opacity: isOpen ? 1 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Goals
+                  </motion.span>
                 </Link>
               </div>
             </motion.div>
@@ -167,6 +185,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                 <motion.span
                   animate={{ opacity: isOpen ? 1 : 0 }}
                   transition={{ duration: 0.2 }}
+                  className="whitespace-nowrap"
                 >
                   {item.label}
                 </motion.span>

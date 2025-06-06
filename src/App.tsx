@@ -12,7 +12,7 @@ import Help from './pages/Help';
 import Auth from './pages/Auth';
 import Expenses from './pages/Expenses';
 import Academic from './pages/Academic';
-import ChatbotButton from './components/ChatbotButton';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -56,8 +56,7 @@ function App() {
               </Routes>
             </main>
           </div>
-          
-          <ChatbotButton />
+          <Chatbot />
         </div>
       </ThemeProvider>
     </Router>

@@ -4,6 +4,7 @@ import MetricsPanel from '../components/dashboard/MetricsPanel';
 import AnalyticsPanel from '../components/dashboard/AnalyticsPanel';
 import ActivityPanel from '../components/dashboard/ActivityPanel';
 import ProjectsPanel from '../components/dashboard/ProjectsPanel';
+import Chatbot from '../components/Chatbot';
 import { Clock, Trophy, Target, TrendingUp } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
@@ -176,6 +177,14 @@ const Dashboard: React.FC = () => {
           transition={{ duration: 0.4, delay: 0.4 }}
         >
           <ActivityPanel />
+        </motion.div>
+
+        <motion.div 
+          className="lg:col-span-2"
+          {...fadeIn} 
+          transition={{ duration: 0.4, delay: 0.5 }}
+        >
+          <Chatbot />
         </motion.div>
       </div>
     </div>
