@@ -14,7 +14,7 @@ import {
   Calendar,
   Target,
   ChevronLeft,
-  DollarSign,
+  IndianRupee,
   GraduationCap
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -26,7 +26,7 @@ const Sidebar: React.FC = () => {
   
   const navItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/', active: location.pathname === '/' },
-    { icon: DollarSign, label: 'Expenses', path: '/expenses', active: location.pathname === '/expenses' },
+    { icon: IndianRupee, label: 'Expenses', path: '/expenses', active: location.pathname === '/expenses' },
     { icon: GraduationCap, label: 'Academic', path: '/academic', active: location.pathname === '/academic' },
     { icon: PenTool, label: 'Write', path: '/write', active: location.pathname === '/write' },
     { icon: BookOpen, label: 'Entries', path: '/entries', active: location.pathname === '/entries' },

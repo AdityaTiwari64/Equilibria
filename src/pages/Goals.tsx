@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Target, CheckCircle2, Circle, Plus } from 'lucide-react';
+import GoalModal from '../components/modals/GoalModal';
+import { Goal } from '../types';
 
 const goals = [
   {
@@ -30,6 +32,13 @@ const goals = [
 ];
 
 const Goals: React.FC = () => {
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
+
+  const handleAddGoal = (goal: Omit<Goal, 'id' | 'progress' | 'daysCompleted'>) => {
+    // TODO: Implement goal creation logic
+    console.log('New goal:', goal);
+  };
+
   return (
     <div className="p-6">
       <div className="max-w-4xl mx-auto">
@@ -41,7 +50,10 @@ const Goals: React.FC = () => {
             </p>
           </div>
           
-          <button className="btn btn-primary flex items-center gap-2">
+          <button 
+            onClick={() => setIsGoalModalOpen(true)}
+            className="btn btn-primary flex items-center gap-2"
+          >
             <Plus size={18} />
             New Goal
           </button>
@@ -105,6 +117,12 @@ const Goals: React.FC = () => {
           ))}
         </motion.div>
       </div>
+
+      <GoalModal
+        isOpen={isGoalModalOpen}
+        onClose={() => setIsGoalModalOpen(false)}
+        onSubmit={handleAddGoal}
+      />
     </div>
   );
 };

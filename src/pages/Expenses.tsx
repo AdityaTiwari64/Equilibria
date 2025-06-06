@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { DollarSign, Plus, Filter, Calendar, Tag, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { IndianRupee, Plus, Filter, Calendar, Tag, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import ExpenseModal from '../components/modals/ExpenseModal';
+import { Expense } from '../types';
 
 const expenseData = [
   { date: 'Mon', amount: 45 },
@@ -23,6 +25,12 @@ const categoryData = [
 
 const Expenses: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
+
+  const handleAddExpense = (expense: Omit<Expense, 'id'>) => {
+    // TODO: Implement expense creation logic
+    console.log('New expense:', expense);
+  };
 
   return (
     <div className="p-6">
@@ -35,7 +43,10 @@ const Expenses: React.FC = () => {
             </p>
           </div>
           
-          <button className="btn btn-primary flex items-center gap-2">
+          <button 
+            onClick={() => setIsExpenseModalOpen(true)}
+            className="btn btn-primary flex items-center gap-2"
+          >
             <Plus size={18} />
             Add Expense
           </button>
@@ -50,10 +61,10 @@ const Expenses: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm text-surface-600 dark:text-surface-400">Total Spent</p>
-                <h3 className="text-2xl font-bold">$295.00</h3>
+                <h3 className="text-2xl font-bold">₹295.00</h3>
               </div>
               <div className="p-3 bg-primary-100 dark:bg-primary-900/30 rounded-lg">
-                <DollarSign className="text-primary-600 dark:text-primary-400" size={24} />
+                <IndianRupee className="text-primary-600 dark:text-primary-400" size={24} />
               </div>
             </div>
             <div className="flex items-center text-sm">
@@ -72,7 +83,7 @@ const Expenses: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm text-surface-600 dark:text-surface-400">Daily Average</p>
-                <h3 className="text-2xl font-bold">$42.14</h3>
+                <h3 className="text-2xl font-bold">₹42.14</h3>
               </div>
               <div className="p-3 bg-secondary-100 dark:bg-secondary-900/30 rounded-lg">
                 <Calendar className="text-secondary-600 dark:text-secondary-400" size={24} />
@@ -117,7 +128,7 @@ const Expenses: React.FC = () => {
                 <h3 className="text-2xl font-bold">59%</h3>
               </div>
               <div className="p-3 bg-success-100 dark:bg-success-900/30 rounded-lg">
-                <DollarSign className="text-success-600 dark:text-success-400" size={24} />
+                <IndianRupee className="text-success-600 dark:text-success-400" size={24} />
               </div>
             </div>
             <div className="h-2 bg-surface-200 dark:bg-surface-700 rounded-full">
@@ -211,6 +222,12 @@ const Expenses: React.FC = () => {
           </motion.div>
         </div>
       </div>
+
+      <ExpenseModal
+        isOpen={isExpenseModalOpen}
+        onClose={() => setIsExpenseModalOpen(false)}
+        onSubmit={handleAddExpense}
+      />
     </div>
   );
 };

@@ -66,3 +66,31 @@ export interface Resource {
   date: string;
   thumbnail?: string;
 }
+
+export interface Expense {
+  id: string;
+  amount: number;
+  category: string;
+  description: string;
+  date: string;
+  paymentMethod?: string;
+  tags?: string[];
+}
+
+export interface Goal {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  progress: number;
+  daysCompleted: number;
+  totalDays: number;
+  startDate: string;
+  endDate: string;
+  status: 'active' | 'completed' | 'abandoned';
+  milestones?: {
+    id: string;
+    title: string;
+    completed: boolean;
+  }[];
+}
