@@ -1,0 +1,133 @@
+.authContainer {
+  @apply min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8;
+}
+
+.authCard {
+  @apply max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500;
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.15);
+}
+
+.authContent {
+  @apply flex flex-row items-stretch relative;
+  height: 600px;
+}
+
+.leftPanel, .rightPanel {
+  @apply w-1/2 bg-gradient-to-br from-blue-500 to-blue-600 text-white p-12 flex flex-col items-center justify-center text-center transition-all duration-500 ease-in-out;
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+.leftPanel h1, .rightPanel h1 {
+  @apply text-4xl font-bold mb-4;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formContainer {
+  @apply w-1/2 p-12 transition-all duration-500 ease-in-out;
+  transform-origin: center;
+}
+
+.formContainer.slideLeft {
+  animation: slideLeft 0.5s forwards;
+}
+
+.formContainer.slideRight {
+  animation: slideRight 0.5s forwards;
+}
+
+.formContainer h2 {
+  @apply text-3xl font-bold text-gray-900 mb-8 text-center;
+  background: linear-gradient(120deg, #4F46E5 0%, #3B82F6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.inputGroup {
+  @apply relative mb-6 transform transition-all duration-200;
+}
+
+.inputGroup:hover {
+  @apply scale-[1.02];
+}
+
+.inputGroup input {
+  @apply w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent
+    placeholder-gray-400 transition-all duration-200 text-gray-900 bg-gray-50;
+}
+
+.inputGroup input:focus {
+  @apply bg-white shadow-lg;
+  transform: translateY(-2px);
+}
+
+.icon {
+  @apply absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 transition-all duration-200;
+}
+
+.inputGroup:focus-within .icon {
+  @apply text-blue-500;
+}
+
+.submitButton {
+  @apply w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-4 rounded-lg transition-all duration-300
+    font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transform hover:scale-[1.02] hover:shadow-lg;
+}
+
+.switchButton {
+  @apply mt-4 px-8 py-2 border-2 border-white text-white rounded-full hover:bg-white hover:text-blue-500
+    transition-all duration-300 font-medium transform hover:scale-105 hover:shadow-lg backdrop-blur-sm;
+}
+
+.socialLogin {
+  @apply mt-8 text-center;
+}
+
+.socialLogin p {
+  @apply text-gray-600 mb-4;
+}
+
+.socialButtons {
+  @apply flex justify-center space-x-4;
+}
+
+.socialButton {
+  @apply p-3 rounded-lg border border-gray-200 hover:border-blue-500 hover:text-blue-500 transition-all duration-200
+    transform hover:scale-110 hover:shadow-md bg-white;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+} 
