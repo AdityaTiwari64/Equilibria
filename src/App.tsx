@@ -1,64 +1,67 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Header from './components/layout/Header';
 import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
+import Expenses from './pages/Expenses';
+import Academic from './pages/Academic';
 import Write from './pages/Write';
 import Entries from './pages/Entries';
 import Goals from './pages/Goals';
 import Settings from './pages/Settings';
 import Help from './pages/Help';
-import Auth from './pages/Auth';
-import Expenses from './pages/Expenses';
-import Academic from './pages/Academic';
 import ChatbotButton from './components/ChatbotButton';
+import Auth from './components/Auth/Auth';
 
-function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const ProtectedRoute: React.FC<{ element: React.ReactElement }> = ({ element }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? element : <Navigate to="/auth" replace />;
+};
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <Router>
-        <Routes>
-          <Route path="/auth" element={<Auth setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="*" element={<Navigate to="/auth\" replace />} />
-        </Routes>
-      </Router>
-    );
-  }
+function AppContent() {
+  const { isAuthenticated } = useAuth();
 
   return (
-    <Router>
-      <ThemeProvider>
-        <div className="min-h-screen flex flex-col">
-          <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-          
+    <div className="min-h-screen flex flex-col">
+      {isAuthenticated ? (
+        <>
+          <Header />
           <div className="flex-1 flex">
-            <Sidebar isOpen={isSidebarOpen} />
-            
-            <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-16'}`}>
+            <Sidebar />
+            <main className="flex-1 transition-all duration-300 lg:ml-16">
               <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/expenses" element={<Expenses />} />
-                <Route path="/academic" element={<Academic />} />
-                <Route path="/write" element={<Write />} />
-                <Route path="/entries" element={<Entries />} />
-                <Route path="/goals" element={<Goals />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/help" element={<Help />} />
-                <Route path="*" element={<Navigate to="/\" replace />} />
+                <Route path="/" element={<ProtectedRoute element={<Dashboard />} />} />
+                <Route path="/expenses" element={<ProtectedRoute element={<Expenses />} />} />
+                <Route path="/academic" element={<ProtectedRoute element={<Academic />} />} />
+                <Route path="/write" element={<ProtectedRoute element={<Write />} />} />
+                <Route path="/entries" element={<ProtectedRoute element={<Entries />} />} />
+                <Route path="/goals" element={<ProtectedRoute element={<Goals />} />} />
+                <Route path="/settings" element={<ProtectedRoute element={<Settings />} />} />
+                <Route path="/help" element={<ProtectedRoute element={<Help />} />} />
               </Routes>
             </main>
           </div>
-          
           <ChatbotButton />
-        </div>
+        </>
+      ) : (
+        <Routes>
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<Navigate to="/auth" replace />} />
+        </Routes>
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
       </ThemeProvider>
     </Router>
   );
