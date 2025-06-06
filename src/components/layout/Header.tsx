@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Bell, Search, Moon, Sun, Settings, HelpCircle, User } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
+  const navigate = useNavigate();
   const notifications = [
     { id: '1', title: 'New update available', message: 'Equilibria v1.2 is now available with new features', time: '2 min ago', read: false, type: 'info' },
     { id: '2', title: 'Server maintenance', message: 'Scheduled maintenance in 24 hours', time: '1 hour ago', read: false, type: 'warning' },
@@ -101,11 +102,11 @@ const Header: React.FC = () => {
               </AnimatePresence>
             </div>
             
-            <button className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100">
+            <button onClick={() => navigate('/help')} className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100">
               <HelpCircle size={20} />
             </button>
             
-            <button className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100 hidden sm:block">
+            <button onClick={() => navigate('/settings')} className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100 hidden sm:block">
               <Settings size={20} />
             </button>
             
