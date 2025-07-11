@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Save, Image, List, Bold, Italic, Link as LinkIcon } from 'lucide-react';
 
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
