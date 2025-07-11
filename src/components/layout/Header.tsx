@@ -4,11 +4,13 @@ import { useTheme } from '../../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeaderProps {
-  toggleSidebar: () => void;
-  isSidebarOpen: boolean;
+  onMenuClick: () => void;
+  onSignOut?: () => void;
+  displayName?: string;
+  photoURL?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
+const Header: React.FC<HeaderProps> = ({ onMenuClick, onSignOut, displayName, photoURL }) => {
   const { theme, toggleTheme } = useTheme();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -23,20 +25,16 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
     <header className="bg-white/80 dark:bg-surface-800/80 backdrop-blur-sm border-b border-surface-200 dark:border-surface-700 sticky top-0 z-30 transition-all duration-200">
       <div className="flex items-center justify-between px-4 py-3 lg:px-6">
         <div className="flex items-center gap-4">
-          <button 
-            onClick={toggleSidebar} 
-            className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100 lg:hidden"
+          <button
+            className="p-2 rounded-lg text-surface-600 hover:text-surface-900 dark:text-surface-400 dark:hover:text-surface-100"
+            onClick={onMenuClick}
           >
-            {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+            <Menu size={24} />
           </button>
-          
-          <button 
-            onClick={toggleSidebar}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-          >
+          <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary-600 text-white font-bold">E</div>
             <h1 className="text-xl font-semibold tracking-tight">Equilibria</h1>
-          </button>
+          </div>
         </div>
 
         <div className="hidden md:flex items-center px-3 py-1.5 gap-2 bg-surface-100 dark:bg-surface-700 rounded-lg w-72 lg:w-96">
@@ -129,11 +127,11 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
               className="flex items-center gap-2 ml-1 p-1 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700"
             >
               <img 
-                src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                src={photoURL || 'https://ui-avatars.com/api/?name=User'}
                 alt="User profile" 
                 className="w-8 h-8 rounded-full object-cover"
               />
-              <span className="font-medium text-sm hidden lg:block">John Doe</span>
+              <span className="font-medium text-sm hidden lg:block">{displayName || 'User'}</span>
             </button>
             
             <AnimatePresence>
@@ -148,19 +146,19 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
                   <div className="p-4 border-b border-surface-200 dark:border-surface-700">
                     <div className="flex items-center gap-3">
                       <img 
-                        src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                        src={photoURL || 'https://ui-avatars.com/api/?name=User'}
                         alt="User profile" 
                         className="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
-                        <h3 className="font-semibold">John Doe</h3>
-                        <p className="text-xs text-surface-600 dark:text-surface-400">Administrator</p>
+                        <h3 className="font-semibold">{displayName || 'User'}</h3>
+                        <p className="text-xs text-surface-600 dark:text-surface-400">User</p>
                       </div>
                     </div>
                   </div>
                   
                   <div className="py-2">
-                    <a href="#" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-surface-50 dark:hover:bg-surface-700/50">
+                    <a href="/profile" className="flex items-center gap-3 px-4 py-2 text-sm hover:bg-surface-50 dark:hover:bg-surface-700/50">
                       <User size={16} />
                       <span>Profile</span>
                     </a>
@@ -171,7 +169,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar, isSidebarOpen }) => {
                   </div>
                   
                   <div className="p-2 border-t border-surface-200 dark:border-surface-700">
-                    <button className="w-full flex items-center justify-center gap-2 p-2 text-sm bg-surface-100 dark:bg-surface-700 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-600">
+                    <button onClick={onSignOut} className="w-full flex items-center justify-center gap-2 p-2 text-sm bg-surface-100 dark:bg-surface-700 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-600">
                       Sign out
                     </button>
                   </div>

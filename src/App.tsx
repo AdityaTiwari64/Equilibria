@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Header from './components/layout/Header';
@@ -13,21 +13,40 @@ import Auth from './pages/Auth';
 import Expenses from './pages/Expenses';
 import Academic from './pages/Academic';
 import Chatbot from './components/Chatbot';
+import { Menu } from 'lucide-react';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth } from './lib/firebase';
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+  const [photoURL, setPhotoURL] = useState('');
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
+      setDisplayName(user?.displayName || user?.email || '');
+      setPhotoURL(user?.photoURL || '');
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const openSidebar = () => setIsSidebarOpen(true);
+  const closeSidebar = () => setIsSidebarOpen(false);
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    setIsAuthenticated(false);
+    setDisplayName('');
   };
 
   if (!isAuthenticated) {
     return (
       <Router>
         <Routes>
-          <Route path="/auth" element={<Auth setIsAuthenticated={setIsAuthenticated} />} />
-          <Route path="*" element={<Navigate to="/auth\" replace />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<Navigate to="/auth" replace />} />
         </Routes>
       </Router>
     );
@@ -37,25 +56,21 @@ function App() {
     <Router>
       <ThemeProvider>
         <div className="min-h-screen flex flex-col">
-          <Header toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-          
-          <div className="flex-1 flex">
-            <Sidebar isOpen={isSidebarOpen} />
-            
-            <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'lg:ml-64' : 'lg:ml-16'}`}>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/expenses" element={<Expenses />} />
-                <Route path="/academic" element={<Academic />} />
-                <Route path="/write" element={<Write />} />
-                <Route path="/entries" element={<Entries />} />
-                <Route path="/goals" element={<Goals />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/help" element={<Help />} />
-                <Route path="*" element={<Navigate to="/\" replace />} />
-              </Routes>
-            </main>
-          </div>
+          <Header onMenuClick={openSidebar} onSignOut={handleSignOut} displayName={displayName} photoURL={photoURL} />
+          <Sidebar isOpen={isSidebarOpen} onClose={closeSidebar} onSignOut={handleSignOut} displayName={displayName} photoURL={photoURL} />
+          <main className="flex-1 transition-all duration-300">
+            <Routes>
+              <Route path="/" element={<Dashboard displayName={displayName} />} />
+              <Route path="/expenses" element={<Expenses />} />
+              <Route path="/academic" element={<Academic />} />
+              <Route path="/write" element={<Write />} />
+              <Route path="/entries" element={<Entries />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
           <Chatbot />
         </div>
       </ThemeProvider>

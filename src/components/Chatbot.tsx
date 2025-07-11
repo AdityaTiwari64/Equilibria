@@ -21,9 +21,7 @@ const Chatbot: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // Remove fetchHistory and related button/useEffect
 
   const speakText = (text: string) => {
     if (isSpeaking) {
@@ -126,6 +124,7 @@ const Chatbot: React.FC = () => {
                 <h2 className="text-lg font-semibold">Chat Assistant</h2>
               </div>
               <div className="flex items-center gap-2">
+                {/* Remove Show History button */}
                 <button
                   onClick={() => {
                     const lastBotMessage = [...messages].reverse().find(msg => msg.role === "bot");

@@ -7,7 +7,12 @@ import ProjectsPanel from '../components/dashboard/ProjectsPanel';
 import Chatbot from '../components/Chatbot';
 import { Clock, Trophy, Target, TrendingUp } from 'lucide-react';
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  displayName?: string;
+  photoURL?: string;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ displayName, photoURL }) => {
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -38,7 +43,7 @@ const Dashboard: React.FC = () => {
       >
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">{getGreeting()}, John</h1>
+            <h1 className="text-3xl font-bold mb-2">{getGreeting()}{displayName ? `, ${displayName}` : ''}</h1>
             <p className="text-surface-600 dark:text-surface-400 flex items-center gap-2">
               <Clock size={16} />
               <span>Last journal entry was 2 hours ago</span>
